@@ -1,0 +1,132 @@
+\section{Proofs of the main results}
+\label{sec:proof}
+
+We provide the proofs of the theorems presented in section 4 of the main text.
+
+\subsection{Proof of Theorem 2}
+\begin{proof}
+ 1) First we prove for $\alpha \leq 1$, $\mathbb{E}_{\{ \bm{h}_k \} }[\hat{\mathcal{L}}_{\alpha, K}]$ is non-decreasing in $K$. It is straight forward to show the results holds for $\alpha=1$. We follow the proof in \cite{burda:iwae} for fixed $\alpha < 1$. Let $K > 1$ and the subset of indices $I = \{i_1, ..., i_{K'} \} \subset \{1, ..., K\}, K' < K$ randomly sampled from integers 1 to $K$. Then for any $\alpha < 1$:
+ \begin{equation*}
+ \begin{aligned}
+  \mathbb{E}_{\{ \bm{h}_k \}_{k=1}^K }[\hat{\mathcal{L}}_{\alpha, K}] 
+  &= \frac{1}{1 - \alpha} \mathbb{E}_{\{ \bm{h}_k \}} \left[ \log \frac{1}{K} \sum_{k=1}^K \left( \frac{p(\bm{h}_k, \bm{x})}{q(\bm{h}_k|\bm{x})}  \right)^{1 - \alpha} \right] \\
+  &= \frac{1}{1 - \alpha} \mathbb{E}_{\{ \bm{h}_k \}} \left[ \log \mathbb{E}_{I \subset \{1, ..., K\}} \left[ \frac{1}{K'} \sum_{k=1}^{K'} \left( \frac{p(\bm{h}_{i_k}, \bm{x})}{q(\bm{h}_{i_k})}  \right)^{1 - \alpha} \right] \right] \\
+  &\geq \frac{1}{1 - \alpha} \mathbb{E}_{\{ \bm{h}_k \}} \left[ \mathbb{E}_{I \subset \{1, ..., K\}} \left[ \log \frac{1}{K'} \sum_{k=1}^{K'} \left( \frac{p(\bm{h}_{i_k}, \bm{x})}{q(\bm{h}_{i_k})}  \right)^{1 - \alpha} \right] \right] \quad \text{($\log x$ is concave)}\\
+  &= \frac{1}{1 - \alpha} \mathbb{E}_{\{ \bm{h}_k \}} \left[ \log \frac{1}{K'} \sum_{k=1}^{K'} \left( \frac{p(\bm{h}_k, \bm{x})}{q(\bm{h}_k|\bm{x})}  \right)^{1 - \alpha} \right] 
+  = \mathbb{E}_{\{ \bm{h}_k \}_{k=1}^{K'} }[\hat{\mathcal{L}}_{\alpha, K'}] 
+ \end{aligned}
+ \end{equation*}
+We used Jensen's inequality of logarithm for the lower-bounding result here. When $\alpha > 1$ we can proof similar result but with inequality reversed, simply because now $1 - \alpha < 0$. \\
+
+2) Next we prove that, when $K \rightarrow \infty$ and $|\mathcal{L}_{\alpha}| < +\infty$, we have $\mathbb{E}_{\{ \bm{h}_k \}_{k=1}^K }[\hat{\mathcal{L}}_{\alpha, K}] \rightarrow \mathcal{L}_{\alpha}$ if $\hat{\mathcal{L}}_{\alpha, K}$ is absolutely integrable wrt.~$qd\mu = dQ$ for all $K \geq 1$ (in other words $\mathbb{E}_{\{ \bm{h}_k \}_{k=1}^K }[|\hat{\mathcal{L}}_{\alpha, K}|] < +\infty$). We only prove it for $\alpha \leq 1$, and for $\alpha > 1$ it can be proved in a similar way. First we use Jensen's inequality again for all finite $K$:
+\begin{equation*}
+ \begin{aligned}
+  \mathbb{E}_{\{ \bm{h}_k \}_{k=1}^K }[\hat{\mathcal{L}}_{\alpha, K}] 
+  &= \frac{1}{1 - \alpha} \mathbb{E}_{\{ \bm{h}_k \}} \left[ \log \frac{1}{K} \sum_{k=1}^K \left( \frac{p(\bm{h}_k, \bm{x})}{q(\bm{h}_k|\bm{x})}  \right)^{1 - \alpha} \right] \\
+  &\leq \frac{1}{1 - \alpha} \log \mathbb{E}_{\{ \bm{h}_k \}} \left[ \frac{1}{K} \sum_{k=1}^K \left( \frac{p(\bm{h}_k, \bm{x})}{q(\bm{h}_k|\bm{x})}  \right)^{1 - \alpha} \right] = \mathcal{L}_{\alpha}.
+ \end{aligned}
+\end{equation*}
+This implies $\limsup_{K \rightarrow +\infty} \mathbb{E}_{\{ \bm{h}_k \}_{k=1}^K }[\hat{\mathcal{L}}_{\alpha, K}] \leq \mathcal{L}_{\alpha}$. 
+
+Then as an intermediate result we prove $\hat{\mathcal{L}}_{\alpha, K} \rightarrow \mathcal{L}_{\alpha}$ almost surely when $K \rightarrow \infty$. For $\alpha \neq 1$, since function $\log $ is continuous we again swap the limit and logarithm:
+\begin{equation*}
+\lim_{K \rightarrow +\infty} \frac{1}{1 - \alpha} \log \frac{1}{K} \sum_{k=1}^K \left( \frac{p(\bm{h}_k, \bm{x})}{q(\bm{h}_k|\bm{x})}  \right)^{1 - \alpha}  
+=  \frac{1}{1 - \alpha} \log \lim_{K \rightarrow +\infty} \frac{1}{K} \sum_{k=1}^K \left( \frac{p(\bm{h}_k, \bm{x})}{q(\bm{h}_k|\bm{x})}  \right)^{1 - \alpha} .
+\end{equation*}
+Now since we assume $|\mathcal{L}_{\alpha}| < +\infty$, this implies $\mathbb{E}_{q} \left[ \left( \frac{p(\bm{h}, \bm{x})}{q(\bm{h}|\bm{x})} \right)^{1 - \alpha} \right]$ is finite. Also notice for all $\alpha$ values the ratio $p/q$ is non-negative. Thus by the strong law of large numbers we have
+\begin{equation*}
+\lim_{K \rightarrow +\infty} \frac{1}{K} \sum_{k=1}^K \left( \frac{p(\bm{h}_k, \bm{x})}{q(\bm{h}_k|\bm{x})}  \right)^{1 - \alpha} = \mathbb{E}_{q(\bm{h}|\bm{x})} \left[ \left( \frac{p(\bm{h}, \bm{x})}{q(\bm{h}|\bm{x})} \right)^{1 - \alpha} \right] \text{ a.~s.,}
+\end{equation*}
+%
+then $\hat{\mathcal{L}}_{\alpha, K} \rightarrow \mathcal{L}_{\alpha}$ almost surely as $K \rightarrow +\infty$. When $\alpha = 1$ we can use similar method to prove $\lim_{K \rightarrow +\infty} \hat{\mathcal{L}}_{1, K} = \mathcal{L}_{\text{VI}}$ almost surely.
+
+Finally, using the non-increasing in $\alpha$ result we will prove later we have $\hat{\mathcal{L}}_{\alpha, K} \geq \hat{\mathcal{L}}_{1, K}$. Thus we can apply Fatou's Lemma and obtain the following almost surely (notice $\mathbb{E}[\hat{\mathcal{L}}_{1, K}] = \mathcal{L}_{\text{VI}}$ for all $K$):
+%
+\begin{equation*}
+\begin{aligned}
+\mathcal{L}_{\alpha} - \mathcal{L}_{\text{VI}} &= \mathbb{E}_{\{ \bm{h}_k \}_{k=1}^K }[ \lim_{K \rightarrow +\infty} \hat{\mathcal{L}}_{\alpha, K} - \hat{\mathcal{L}}_{1, K}] \\
+&\leq \liminf_{K \rightarrow +\infty} \mathbb{E}_{\{ \bm{h}_k \}_{k=1}^K }[\hat{\mathcal{L}}_{\alpha, K} - \hat{\mathcal{L}}_{1, K}] \\
+&= \liminf_{K \rightarrow +\infty} \mathbb{E}_{\{ \bm{h}_k \}_{k=1}^K }[\hat{\mathcal{L}}_{\alpha, K}] - \mathcal{L}_{\text{VI}}.
+\end{aligned}
+\end{equation*}
+%
+Combining with the supremum bound, we have $\mathbb{E}_{\{ \bm{h}_k \}_{k=1}^K }[\hat{\mathcal{L}}_{\alpha, K}] \rightarrow \mathcal{L}_{\alpha}$ when $K$ goes to infinity. For $\alpha > 1$ we use Jensen's inequality to bound the limit infimum and the non-increasing property in $\alpha$ to bound the limit supremum. Thus the convergence result holds for all $\alpha \in \{\alpha: |\mathcal{L}_{\alpha}| < +\infty \}$.\\
+%
+
+3) $\mathbb{E}[\hat{\mathcal{L}}_{\alpha, K}]$ is non-increasing in $\alpha$: since expectation preserves monotonicity, it is sufficient to prove the result for $\hat{\mathcal{L}}_{\alpha, K}$. This can be proved in similar way as Theorem 3 and 39 in \cite{van_erven:renyi}, and we include the prove here for completeness. Notice that for $\alpha < \beta$ function $x^{\frac{1 - \alpha}{1 - \beta}}$ defined on $x > 0$ is convex when $\alpha < 1$ and concave when $\alpha > 1$. So applying Jensen's inequality:
+\begin{equation*}
+\begin{aligned}
+\hat{\mathcal{L}}_{\alpha, K} = \frac{1}{1 - \alpha} \log \frac{1}{K} \sum_{k=1}^K \left( \frac{p(\bm{h}_k, \bm{x})}{q(\bm{h}_k|\bm{x})}  \right)^{1 - \alpha} 
+&= \frac{1}{1 - \alpha} \log \frac{1}{K} \sum_{k=1}^K \left( \left( \frac{p(\bm{h}_k, \bm{x})}{q(\bm{h}_k|\bm{x})}  \right)^{1 - \beta} \right)^{\frac{1 - \alpha}{1 - \beta}} \\
+&\geq \frac{1}{1 - \alpha} \log \left( \frac{1}{K} \sum_{k=1}^K \left( \frac{p(\bm{h}_k, \bm{x})}{q(\bm{h}_k|\bm{x})}  \right)^{1 - \beta} \right)^{\frac{1 - \alpha}{1 - \beta}} = \hat{\mathcal{L}}_{\beta, K}.
+\end{aligned}
+\end{equation*}
+
+%
+Continuity in $\alpha$: First we show $\hat{\mathcal{L}}_{\alpha, K}$ is continuous in $\alpha$ when $p(\bm{h}_k, \bm{x}) \neq 0$ for $\bm{h}_k \sim q$. For $\alpha \neq 0, 1, \infty$ and for any sequence $\{\alpha_n\} \rightarrow \alpha$ it is sufficient to show that
+\begin{equation*}
+\begin{aligned}
+&\lim_{n \rightarrow \infty} \log \frac{1}{K} \sum_k q(\bm{h}_k|\bm{x})^{\alpha_n} p(\bm{h}_k, \bm{x})^{1 - \alpha_n} \\
+=& \log \lim_{n \rightarrow \infty} \frac{1}{K} \sum_k q(\bm{h}_k|\bm{x})^{\alpha_n} p(\bm{h}_k, \bm{x})^{1 - \alpha_n} \quad \text{($\log x$ is a continuous function)} \\
+=& \log \frac{1}{K} \sum_k \lim_{n \rightarrow \infty} q(\bm{h}_k|\bm{x})^{\alpha_n} p(\bm{h}_k, \bm{x})^{1 - \alpha_n} \quad \text{(finite sum)} \\
+=& \log \frac{1}{K} \sum_k  q(\bm{h}_k|\bm{x}) \left( \frac{p(\bm{h}_k, \bm{x})}{q(\bm{h}_k|\bm{x})} \right)^{1 - \lim_{n \rightarrow \infty} \alpha_n} \quad \text{($a^x$ is continuous in $x$ for all $a > 0$)} \\
+=& \log \frac{1}{K} \sum_k q(\bm{h}_k|\bm{x})^{\alpha} p(\bm{h}_k, \bm{x})^{1 - \alpha}.
+\end{aligned}
+\end{equation*}
+We note that since we assume $\hat{\mathcal{L}}_{\alpha, K}$ is absolutely integrable, we have $p/q > 0$ almost everywhere on the support of $q$. Hence $\{ \hat{\mathcal{L}}_{\alpha_n, K} \}$ has point-wise limit $\hat{\mathcal{L}}_{\alpha, K}$ almost everywhere as $n \rightarrow +\infty$. 
+
+For $\alpha = 0, 1, \infty$ the R{\'e}nyi divergence is defined by continuity so one can use the same technique to show the continuity of $\hat{\mathcal{L}}_{\alpha, K} $ on those $\alpha$ values for fixed $K$. Then since $\alpha_n \rightarrow \alpha$, for any $\epsilon > 0$, there exists $n$ that is large enough such that $\alpha_m \in (\alpha - \epsilon, \alpha + \epsilon)$ for all $m > n$. Using the monotonicity result, we have for $\forall m > n$, $\hat{\mathcal{L}}_{\alpha_m, K}$ is bounded in the interval $(\hat{\mathcal{L}}_{\alpha + \epsilon, K}, \hat{\mathcal{L}}_{\alpha - \epsilon, K})$ and by assumption we have $\mathbb{E}[ |\hat{\mathcal{L}}_{\alpha -\epsilon, K}|] < +\infty$ and $\mathbb{E}[ |\hat{\mathcal{L}}_{\alpha +\epsilon, K}|] < +\infty$. This allows us to apply the dominated convergence theorem to prove $\lim_{n \rightarrow +\infty} \mathbb{E}[\hat{\mathcal{L}}_{\alpha_n, K}] = \mathbb{E}[ \lim_{n \rightarrow +\infty} \hat{\mathcal{L}}_{\alpha_n, K}] = \mathbb{E}[ \hat{\mathcal{L}}_{\alpha, K}]$. Thus we have proved that $\mathbb{E}[ \hat{\mathcal{L}}_{\alpha, K}]$ is continuous on $\alpha \in \{ |\mathcal{L}_{\alpha}| < +\infty \}$ if $\hat{\mathcal{L}}_{\alpha, K}$ is absolutely integrable.
+
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Proof of Corollary 1}
+It is sufficient to prove the corollary for the case $q(\bm{h}|\bm{x}) \neq p(\bm{h}|\bm{x})$. We first introduce the following lemmas. With overloaded notation, $\mu$ denotes the measure on the corresponding space, which also means $dQ = qd\mu$. As we assume $\text{supp}(p) \subseteq \text{supp}(q)$, there might exist some regions that $q > 0$ but $p = 0$. We define $\rho = \frac{\mu(\text{supp}(q) \backslash \text{supp}(p))}{\mu(\text{supp}(q))}$ and rewrite the computation of $\mathbb{E}[\hat{\mathcal{L}}_{\alpha, K}]$.
+
+\begin{lemma}
+Assume $\rho > 0$. Then for all finite $K$ and $\alpha < 0$, $\mathbb{E}_{\{\bm{h}_k\}_{k=1}^K} [ \hat{\mathcal{L}}_{\alpha, K}(q; \bm{x}) ] = -\infty$ and thus $\hat{\mathcal{L}}_{\alpha, K}$ is not integrable wrt.~$qd\mu = dQ$.
+\label{lemma:alpha_k_non_exist}
+\end{lemma}
+
+\begin{proof}
+We define $\tilde{q}$ as the $q$ distribution restricted on the support of $p$, i.e.~$\tilde{q} = q / (1 - \rho)$ defined on $\text{supp}(p)$. Then for any fixed $K < +\infty$ and $\alpha < 0$, we have
+\begin{equation*}
+\begin{aligned}
+\mathbb{E}_{\{\bm{h}_k\}_{k=1}^K \sim q} [ \hat{\mathcal{L}}_{\alpha, K}(q; \bm{x}) ] 
+=& \rho^{K} \log 0 
++ \sum_{k=1}^K {K \choose k} \rho^{K - k} (1 - \rho)^{k} \left( \mathbb{E}_{\{\bm{h}_j\}_{j=1}^k \sim \tilde{q}}[\hat{\mathcal{L}}_{\alpha, k}(\tilde{q}; \bm{x})] + \log k \right) \\
+-& (1 - \rho^K) ((1 - \alpha) \log (1 - \rho) + \log K) 
+\end{aligned}
+\end{equation*}
+Thus $\mathbb{E}_{\{\bm{h}_k\}_{k=1}^K} [ \hat{\mathcal{L}}_{\alpha, K}(q; \bm{x}) ] = -\infty$ for all finite $K$ and $\alpha < 0$. 
+\end{proof}
+
+The above example shows the pathology of MC approximation which is further discussed in section \ref{sec:opt}. From now on we assume $\hat{\mathcal{L}}_{\alpha, K}$ is absolutely integrable in order to apply Theorem 2.
+ 
+\begin{lemma}
+Assume $\alpha < 0$, $\hat{\mathcal{L}}_{\alpha, K}$ absolutely integrable wrt.~$qd\mu = dQ$ for all $K$, $\mathcal{L}_{\alpha} > \mathcal{L}_{\text{VI}}$, and $|\mathcal{L}_{\alpha}| < +\infty$. Then there exists $1 \leq K_{\alpha} < +\infty$ such that for all $K \leq K_{\alpha} < K'$, $\mathbb{E}_{\{\bm{h}_k\}_{k=1}^K} [ \hat{\mathcal{L}}_{\alpha, K}(q; \bm{x}) ] \leq \log p(\bm{x}) < \mathbb{E}_{\{\bm{h}_k\}_{k=1}^{K'}} [ \hat{\mathcal{L}}_{\alpha, K'}(q; \bm{x}) ]$. Also $K_{\alpha}$ is \textbf{non-decreasing} in $\alpha$ with $\lim_{\alpha \rightarrow 0} K_{\alpha} = + \infty$ and $\lim_{\alpha \rightarrow -\infty} K_{\alpha} \geq 1$.
+\label{lemma:alpha_k_existence}
+\end{lemma}
+
+\begin{proof}
+%
+1) Existence of $K_{\alpha}$: first from Theorem 2 we have $\mathbb{E}[\hat{\mathcal{L}}_{\alpha, K}]$ is non-decreasing in $K$ when $\alpha < 0$. Then since for all $\alpha$, $\mathbb{E}[\hat{\mathcal{L}}_{\alpha, 1}] = \mathcal{L}_{\text{VI}} \leq \log p(\bm{x})$, we have $K_{\alpha} \geq 1$ if $K_{\alpha}$ exists. Also from Theorem 2 we have $\lim_{K \rightarrow +\infty} \mathbb{E}[\hat{\mathcal{L}}_{\alpha, K}] = \mathcal{L}_{\alpha} > \log p(\bm{x})$ for all $\alpha < 0$. Hence for $\epsilon = \mathcal{L}_{\alpha} - \log p(\bm{x})$ there exist $K$ that is finite but large enough such that $\mathcal{L}_{\alpha} - \mathbb{E}[\hat{\mathcal{L}}_{\alpha, K'}] < \epsilon$ for all $K' > K$. Now we can define $\epsilon = \mathcal{L}_{\alpha} - \mathcal{L}_{\text{VI}}$ and take $K_{\alpha}$ as the minimum of such $K$, and it is straight-forward to show that $1 \leq K_{\alpha} < +\infty$. 
+
+%
+2) $K_{\alpha}$ is non-decreasing in $\alpha$: suppose there exist $\alpha > \beta$ such that $K_{\alpha} < K_{\beta}$. Then there exist $K_{\alpha} < K \leq K_{\beta}$ such that $\mathbb{E}[\hat{\mathcal{L}}_{\alpha, K}] > \log p(\bm{x}) \geq \mathbb{E}[\hat{\mathcal{L}}_{\beta, K}]$. But Theorem 2 says $\mathbb{E}[\hat{\mathcal{L}}_{\alpha, K}]$ is non-increasing in $\alpha$, a contradiction. 
+
+%
+3) Since $\lim_{K \rightarrow +\infty} \mathbb{E}[\hat{\mathcal{L}}_{\alpha, K}] = \mathcal{L}_{\alpha}$ and $\mathcal{L}_{\alpha} \downarrow \log p(\bm{x})$ when $\alpha \uparrow 0$, we have $\lim_{\alpha \rightarrow 0} K_{\alpha} = +\infty$. Also since $K_{\alpha}$ is non-decreasing in $\alpha$ and is lower-bounded by 1, we have the limit exists and $\lim_{\alpha \rightarrow -\infty} K_{\alpha} \geq 1$.
+\end{proof}
+
+Now we prove Corollary 1, and we only prove it with the conditions assumed in Lemma \ref{lemma:alpha_k_existence} since $K_{\alpha} = +\infty$ for the other cases, and if so for all $\alpha < 0$, then $\alpha_K = -\infty$ for all finite $K$.
+\begin{proof}
+ 
+1) Existence of $\alpha_K$ for $\lim_{\alpha \rightarrow -\infty} K_{\alpha} < K < +\infty$: from Lemma \ref{lemma:alpha_k_existence} we can find $\alpha > \beta$ such that $K_{\alpha} \geq K \geq K_{\beta}$. This means  $\mathbb{E}[\hat{\mathcal{L}}_{\alpha, K}] \leq \log p(\bm{x}) \leq \mathbb{E}[\hat{\mathcal{L}}_{\beta, K}]$. Since $\mathbb{E}[\hat{\mathcal{L}}_{\alpha, K}]$ is continuous in $\alpha$ for any fixed $K$, there exits $\alpha \leq \gamma \leq \beta$ to have $\mathbb{E}[\hat{\mathcal{L}}_{\gamma, K}] = \log p(\bm{x})$. Note that $\gamma$ might not be unique, so we define $\alpha_K$ as the minimum of such $\gamma$, which also gives $\mathbb{E} [ \hat{\mathcal{L}}_{\alpha, K} ] > \log p(\bm{x})$ for all $\alpha < \alpha_K$.
+
+2) $\alpha_K$ is non-decreasing in $K$: suppose there exist $K < K'$ with $\alpha_K > \alpha_{K'}$. Then we can find $\alpha_K > \alpha > \alpha_{K'}$ such that $\mathbb{E}[\hat{\mathcal{L}}_{\alpha, K}] > \log p(\bm{x}) = \mathbb{E}[\hat{\mathcal{L}}_{\alpha_{K'}, K'}] \geq \mathbb{E}[\hat{\mathcal{L}}_{\alpha, K'}]$. But from Theorem 2 $\mathbb{E}[\hat{\mathcal{L}}_{\alpha, K}]$ is non-decreasing in $K$, a contradiction.
+
+3) Since $\lim_{K \rightarrow +\infty} \mathbb{E}[\hat{\mathcal{L}}_{\alpha, K}] = \mathcal{L}_{\alpha}$ and $\mathcal{L}_{\alpha} \downarrow \log p(\bm{x})$ when $\alpha \uparrow 0$, we have $\lim_{K \rightarrow +\infty} \alpha_K = 0$. Also for all $\alpha$, $\mathbb{E}[\hat{\mathcal{L}}_{\alpha, 1}] = \mathcal{L}_{VI} \leq \log p(\bm{x})$, so $\lim_{K \rightarrow 1} \alpha_K = -\infty$.
+ 
+\end{proof}

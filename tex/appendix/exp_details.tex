@@ -1,0 +1,48 @@
+\section{Further experimental details and results}
+\label{sec:exp_details}
+
+\subsection{Bayesian neural network}
+We detail the experimental set-up of the Bayesian neural network example.
+%
+For regression tests, we consider Protein and Year as the large datasets and the others as small datasets. The likelihood function is defined as $p(y|\bm{x}, \bm{\theta}) = \mathcal{N}(y; F_{\bm{\theta}}(\bm{x}), \sigma^2)$ where $F_{\bm{\theta}}(\bm{x})$ denotes the non-linear transform from the neural network with weights $\bm{\theta}$. We use unit Gaussian prior $\bm{\theta} \sim \mathcal{N}(\bm{\theta}; \bm{0}, \bm{I})$ and Gaussian approximation $q(\bm{\theta}) = \mathcal{N}(\bm{\theta}; \bm{\mu}_q, diag(\bm{\sigma}_q))$, where we fit the parameters of $q$ and the noise level $\sigma$ by optimising the lower-bound. For all datasets we use single-layer neural networks with 50 hidden units (ReLUs) for datasets except Protein and Year (100 units). The methods for comparison were run for $500$ epochs on the small datasets and $100$, $40$ epochs for the large datasets Protein and Year, respectively. We used ADAM \cite{kingma:adam} for optimisation with learning rate 0.001 and the standard setting for other parameters. For stochastic optimisation we used learning rate $0.001$, mini-batch size $M = 32$ and number of samples $K=100, 10$ for small and large datasets. The number of dataset random splits is 20 except for the large datasets, which is 5 and 1 for Protein and Year, respectively. 
+
+The full test results are provided in Figure \ref{fig:bnn_results_all} and Table \ref{tab:bnn_ll}, \ref{tab:bnn_rmse}. In the tables the best performing results are underlined, while the worse cases are also bold-faced. Clearly the optimal $\alpha$ setting is dataset dependent, although for Boston and Power the performances are very similar. Also for Naval mass-covering seems to be harmful not only for predictive error but also for test log-likelihood measure. Overall mode-seeking methods tend to focus on improving the predictive error, while mass-covering regimes often return better test log-likelihood. 
+
+
+\subsection{Variational auto-encoder}
+We describe the network architecture tested in the VAE experiments. The number of stochastic layers $L$, number of hidden units, and the activation function are summarised in Table \ref{tab:vae_arch}. The prefix of the number indicates whether this layer is \textbf{d}eterministic or \textbf{s}tochastic, e.g.~d500-s200 stands for a neural network with one deterministic layer of 500 units followed by a stochastic layer of 200 units. For Frey Face data we train the models using learning rate 0.0005 and mini-batch size 100. For MNIST and OMNIGLOT we reuse the settings from \cite{burda:iwae}: the training process runs for $3^i$ passes with learning rate $0.0001 \cdot 10^{-i/7}$ for $i = 0, ..., 7$, and the batch size is 20. For Caltech Silhouettes we use the same settings as MNIST and OMNIGLOT except that the training proceeded for $\sum_{i=0}^7 2^i = 255$ epochs.
+
+We also present some samples from the VR-max trained auto-encoders in Figure \ref{fig:vae_samples}, and note that the visual quality of these samples are almost identical to those from IWAE.
+
+\begin{figure}[ht]
+\centering
+    \includegraphics[width=1\linewidth]{../figs/results_all_bnn.pdf}
+    \caption{Test LL and RMSE results for Bayesian neural network regression. The lower the better.}
+    \label{fig:bnn_results_all}
+
+\input{../tables/bnn_ll}
+\input{../tables/bnn_rmse}
+       
+\end{figure}
+
+\begin{figure*}[t]
+ \centering
+ %\subfigure[Frey Face]{
+ %\includegraphics[width=0.4\linewidth]{../figs/freyface_samples.pdf}}
+ %\hspace{0.3in}
+ %\subfigure[Caltech 101 Silhouettes]{
+ %\includegraphics[width=0.4\linewidth]{../figs/silhouettes_samples.pdf}}
+ %\hspace{0.3in}
+ %\subfigure[MNIST]{
+ %\includegraphics[width=0.4\linewidth]{../figs/mnist_samples.pdf}}
+ %\hspace{0.3in}
+ %\subfigure[OMNIGLOT]{
+ %\includegraphics[width=0.4\linewidth]{../figs/omni_samples.pdf}}
+ %\caption{Sampled images from the VR-max trained auto-encoders.}
+ 
+  \includegraphics[width=0.6\linewidth]{../figs/vae_samples.pdf}
+  \caption{Sampled images from the the best models trained with IWAE (left) and VR-max (right).}
+  \label{fig:vae_samples}
+%
+\input{vae_architecture}
+\end{figure*}

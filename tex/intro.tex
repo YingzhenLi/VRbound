@@ -1,0 +1,25 @@
+\section{Introduction}
+Approximate inference, that is approximating posterior distributions and likelihood functions, is at the core of modern probabilistic machine learning. This paper focuses on optimisation-based approximate inference algorithms, popular examples of which include variational inference (VI), variational Bayes (VB) \cite{jordan:vi, beal:thesis} and expectation propagation (EP) \cite{minka:ep, opper:ec}. Historically, VI has received more attention compared to other approaches, although EP can be interpreted as iteratively minimising a set of local divergences \cite{minka:divergence}. This is mainly because VI has elegant and useful theoretical properties such as the fact that it proposes a lower-bound of the log-model evidence. Such a lower-bound can serve as a surrogate to both maximum likelihood estimation (MLE) of the hyper-parameters and posterior approximation by Kullback-Leibler (KL) divergence minimisation.
+
+%%%%%%%%% trend of approximate inference %%%%%%%%%%%
+
+Recent advances of approximate inference follow three major trends.
+%
+First, scalable methods, e.g.~stochastic variational inference (SVI) \cite{hoffman:svi} and stochastic expectation propagation (SEP) \cite{li:sep, barthelme:aep}, have been developed for datasets comprising millions of datapoints. Recent approaches \cite{broderick:stream, gelman:dep, xu:sms} have also applied variational methods to coordinate parallel updates arising from computations performed on chunks of data.
+%
+Second, Monte Carlo methods and black-box inference techniques have been deployed to assist variational methods, e.g.~see \cite{paisley:bbvi, salimans:reparam, ranganath:bbvi, kucukelbir:vi_stan} for VI and \cite{hernandez-lobato:bb-alpha} for EP. They all proposed ascending the Monte Carlo approximated variational bounds to the log-likelihood using noisy gradients computed with automatic differentiation tools.
+%
+Third, tighter variational lower-bounds have been proposed for (approximate) MLE. The importance weighted auto-encoder (IWAE) \cite{burda:iwae} improved upon the variational auto-encoder (VAE) \cite{kingma:vae, rezende:vae} framework, by providing tighter lower-bound approximations to the log-likelihood using importance sampling. 
+%
+These recent developments are rather separated and little work has been done to understand their connections.
+
+%%%%%% why VR bound %%%%%%%%
+In this paper we try to provide a unified framework from an energy function perspective that encompasses a number of recent advances in variational methods, and we hope our effort could potentially motivate new algorithms in the future. This is done by extending traditional VI to R{\'e}nyi's $\alpha$-divergence \cite{renyi:divergence}, a rich family that includes many well-known divergences as special cases. After reviewing useful properties of R{\'e}nyi divergences and the VI framework, we make the following contributions:
+
+\begin{itemize}[leftmargin=8mm]
+ \item We introduce the \emph{variational R{\'e}nyi bound} (VR) as an extension of VI/VB. We then discuss connections to existing approaches, including VI/VB, VAE, IWAE \cite{burda:iwae}, SEP \cite{li:sep} and black-box alpha (BB-$\alpha$) \cite{hernandez-lobato:bb-alpha}, thereby showing the richness of this new family of variational methods.
+ %\vspace{-0.03in} 
+ \item We develop an optimisation framework for the VR bound. An analysis of the bias introduced by stochastic approximation is also provided with theoretical guarantees and empirical results.
+ %\vspace{-0.03in} 
+ \item We propose a novel approximate inference algorithm called \emph{VR-max} as a new special case. Evaluations on VAEs and Bayesian neural networks show that this new method is often comparable to, or even better than, a number of the state-of-the-art variational methods.
+\end{itemize}

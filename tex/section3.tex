@@ -1,0 +1,25 @@
+\section{Variational R{\'e}nyi bound}
+\label{sec:vr_bound}
+Recall from Section \ref{sec:renyi_divergence} that the family of R{\'e}nyi divergences includes the KL divergence. Perhaps variational free-energy approaches can be generalised to the R{\'e}nyi case? Consider approximating the exact posterior $p(\bm{\theta}|\mathcal{D})$ by minimizing R{\'e}nyi's $\alpha$-divergence $\mathrm{D}_{\alpha}[q(\bm{\theta}) || p(\bm{\theta} | \mathcal{D})]$ for some selected $\alpha > 0$.
+%
+Now we consider the equivalent optimization problem $\max_{q \in \mathcal{Q}} \log p(\mathcal{D}) - \mathrm{D}_{\alpha}[q(\bm{\theta}) || p(\bm{\theta} | \mathcal{D})]$, and when $\alpha \neq 1$, whose objective can be rewritten as
+\begin{equation}
+\mathcal{L}_{\alpha}(q; \mathcal{D}) := \frac{1}{1 - \alpha} \log \mathbb{E}_{q} \left[ \left( \frac{p(\bm{\theta}, \mathcal{D})}{q(\bm{\theta})} \right)^{1 - \alpha} \right].
+\label{eq:alpha_vi}
+\end{equation}
+%
+We name this new objective the \emph{variational R{\'e}nyi (VR) bound}. Importantly the above definition can be extend to $\alpha \leq 0$, and the following theorem is a direct result of Proposition \ref{prop:renyi_divergence}.
+\begin{theorem}
+\label{thm:alpha_vi}
+The objective $\mathcal{L}_{\alpha}(q; \mathcal{D})$ is \textbf{continuous} and \textbf{non-increasing} on $\alpha \in \{\alpha: |\mathcal{L}_{\alpha}| < +\infty \}$. Especially for all $0 < \alpha_{+} < 1$ and $\alpha_{-} < 0$,
+\begin{equation*}
+\mathcal{L}_{\text{VI}}(q; \mathcal{D}) = \lim_{\alpha \rightarrow 1} \mathcal{L}_{\alpha}(q; \mathcal{D}) 
+ \leq \mathcal{L}_{\alpha_{+}}(q; \mathcal{D}) \leq \mathcal{L}_{0}(q; \mathcal{D}) \leq \mathcal{L}_{\alpha_{-}}(q; \mathcal{D})
+\end{equation*}
+Also $\mathcal{L}_{0}(q; \mathcal{D}) = \log p(\mathcal{D})$ if and only if the support $ \mathrm{supp}(p(\bm{\theta}|\mathcal{D})) \subseteq  \mathrm{supp}(q(\bm{\theta})) $.
+\end{theorem}
+%
+Theorem \ref{thm:alpha_vi} indicates that the VR bound can be useful for model selection by sandwiching the marginal likelihood with bounds computed using positive and negative $\alpha$ values, which we leave to future work. In particular $\mathcal{L}_{0} = \log p(\mathcal{D})$ under the mild assumption that $q$ is supported where the exact posterior is supported. This assumption holds for many commonly used distributions, e.g.~Gaussians are supported on the entire space, and in the following we assume that this condition is satisfied. 
+
+%
+Choosing different alpha values allows the approximation to balance between zero-forcing ($\alpha \rightarrow +\infty$, when using uni-modal approximations it is usually called mode-seeking) and mass-covering ($\alpha \rightarrow -\infty$) behaviour. This is illustrated by the Bayesian linear regression example, again in Figure \ref{fig:linear_regression_posterior}. First notice that $\alpha \rightarrow +\infty$ (in cyan) returns non-zero uncertainty estimates (although it is more over-confident than VI) which is different from the maximum a posteriori (MAP) method that only returns a point estimate. Second, setting $\alpha = 0.0$ (in green) returns $q(\bm{\theta}) = \prod_i p(\theta_i|\mathcal{D})$ and the exact marginal likelihood $\log p(\mathcal{D})$ (Figure \ref{fig:linear_regression_energy}). Also the approximate MLE is less biased for $\alpha = 0.5$ (in blue) since now the tightness of the bound is less hyper-parameter dependent.

@@ -1,0 +1,61 @@
+\section{A mean-field approximation example}
+\label{sec:mean_field}
+
+We present the mean-field approximation method for the VR bound family, with Bayesian linear regression as an illustrating example. Recall the VR bound for $\alpha \neq 1$:
+\begin{equation}
+\mathcal{L}_{\alpha}(q; \mathcal{D}) := \frac{1}{1 - \alpha} \log \mathbb{E}_{q} \left[ \left( \frac{p(\bm{\theta}, \mathcal{D})}{q(\bm{\theta})} \right)^{1 - \alpha} \right],
+\label{eq:alpha_vi}
+\end{equation}
+where the $q$ distribution is factorised over the components of $\bm{\theta} = (\theta_1, ..., \theta_d)$: $q(\bm{\theta}) = \prod_{i} q(\theta_i)$. In the following we denote $q_j = q(\theta_j)$ to reduce notational clutter, and re-write the VR bound as
+\begin{equation*}
+\begin{aligned}
+\mathcal{L}_{\alpha}(q; \mathcal{D}) &= \frac{1}{1 - \alpha} \log \int \prod_i q_i  \left( \frac{p(\bm{\theta}, \mathcal{D})}{\prod_i q_i} \right)^{1 - \alpha} d\bm{\theta} \\
+&= \frac{1}{1 - \alpha} \log \int q_j^{\alpha} \left( \int \prod_{i \neq j} q_i  \left( \frac{p(\bm{\theta}, \mathcal{D})}{\prod_{i \neq j} q_i} \right)^{1 - \alpha} d\bm{\theta}_{i \neq j} \right) d\theta_j \\
+&:= \frac{1}{1 - \alpha} \log \int q_j^{\alpha} \tilde{p}_j^{1 - \alpha} d\theta_j + \text{const},
+\end{aligned}
+\end{equation*}
+where $\tilde{p}_j$ denote the ``marginal'' distribution satisfying
+\begin{equation*}
+\log \tilde{p}_j = \frac{1}{1 - \alpha} \log \int \prod_{i \neq j} q_i  \left( \frac{p(\bm{\theta}, \mathcal{D})}{\prod_{i \neq j} q_i} \right)^{1 - \alpha} d\bm{\theta}_{i \neq j} + \text{const}.
+\end{equation*}
+Now maximising the VR bound (when $\alpha > 0$, and for $\alpha < 0$ we minimise the bound) is equivalent to minimising $\mathrm{D}_{\alpha}[q_j||\tilde{p}_j]$ (for $\alpha > 0$, and when $\alpha < 0$ we minimise $\mathrm{D}_{1 - \alpha}[\tilde{p}_j||q_j]$), which means $\log q_j = \log \tilde{p}_j + \text{const}$. One can verify that when $\alpha \rightarrow 1$ it recovers the traditional variational mean-field approximation
+\begin{equation*}
+\lim_{\alpha \rightarrow 1} q_j = \int \prod_{i \neq j} q_i \log p(\bm{\theta}, \mathcal{D}) d\bm{\theta}_{i \neq j} + \text{const},
+\end{equation*}
+and when $\alpha \rightarrow 0$ it returns the exact marginal of the posterior distribution $\lim_{\alpha \rightarrow 0} q_j = p(\theta_j |\mathcal{D})$.
+
+Now consider Bayesian linear regression with 2-D input $\bm{x}$ and 1-D output $y$, as an example:
+\begin{equation*}
+\bm{\theta} \sim \mathcal{N}(\bm{\theta}; \bm{\mu}_0, \bm{\Lambda}_0^{-1}), \quad 
+y|\bm{x} \sim \mathcal{N}(y; \bm{\theta}^T \bm{x}, \sigma^2).
+\end{equation*}
+Given the observations $\mathcal{D} = \{\bm{x}_n, y_n \}$, the posterior distribution of $\bm{\theta}$ can be computed analytically as $p(\bm{\theta}|\mathcal{D}) = \mathcal{N}(\bm{\theta}; \bm{\mu}, \bm{\Lambda}^{-1})$ with $\bm{\Lambda} = \bm{\Lambda}_0 + \frac{1}{\sigma^2} \sum_n \bm{x}_n \bm{x}_n^T$ and $\bm{\Lambda} \bm{\mu} = \bm{\Lambda}_0 \bm{\mu}_0 + \frac{1}{\sigma^2} \sum_n y_n \bm{x}_n$. To see how the mean-field approach work we explicitly write down the elements of the posterior parameters
+\begin{equation*}
+\bm{\mu} = \begin{pmatrix} \mu_1 \\ \mu_2 \end{pmatrix}, \quad
+\bm{\Lambda} = \begin{pmatrix} \Lambda_{11} & \Lambda_{12} \\ \Lambda_{21} & \Lambda_{22} \end{pmatrix}, 
+\quad \Lambda_{12} = \Lambda_{21},
+\end{equation*}
+and define $q_i = \mathcal{N}(\theta_i; m_i, \lambda_i^{-1})$ as a univariate Gaussian distribution. Then
+\begin{equation*}
+\begin{aligned}
+\log q_1 &= \frac{1}{1 - \alpha} \log \int q_2(\theta_2)  \left( \frac{p(\bm{\theta}, \mathcal{D})}{q_2(\theta_2)} \right)^{1 - \alpha} d\theta_2 + \text{const} \\
+&= \frac{1}{1 - \alpha} \log \int \exp \left[ -\frac{1 - \alpha}{2} (\bm{\theta} - \bm{\mu})^T \bm{\Lambda} (\bm{\theta} - \bm{\mu}) - \frac{\alpha}{2} \lambda_2 (\theta_2 - m_2)^2 \right] d\theta_2 + \text{const} \\
+&= \frac{1}{1 - \alpha} \log \int \mathcal{N}(\bm{\theta}; \bm{\mu}, \tilde{\bm{\Sigma}}) d\theta_2 + \text{const} \\
+&= \log \mathcal{N}(\theta_1; m_1, \lambda^{-1}) + \text{const}
+\end{aligned}
+\end{equation*}
+where the new mean $m_1$ and the precision $\lambda_1$ satisfies
+\begin{equation*}
+\begin{aligned}
+m_1 = \mu_1 + C_1(\mu_2 - m_2), \quad C_1 = \frac{\alpha \lambda_2 \Lambda_{12}}{(1 - \alpha) |\bm{\Lambda}| + \alpha \lambda_2 \Lambda_{11}}, \\
+\lambda_1 = \Lambda_{11} - (1 - \alpha) \Lambda_{12} ((1 - \alpha) \Lambda_{22} + \alpha \lambda_2)^{-1} \Lambda_{21}.
+\end{aligned}
+\end{equation*}
+One can derive the terms $m_2$ and $C_2$ for $q_2$ in the same way, and show that $\bm{m} = \bm{\mu}$ is the only stable fixed point of this iterative update. So we have $q_1 = \mathcal{N}(\theta_1; \mu_1, \lambda_1^{-1})$, and similarly $q_2 = \mathcal{N}(\theta_1; \mu_2, \lambda_2^{-1})$ with $\lambda_2 = \Lambda_{22} - (1 - \alpha) \Lambda_{21} ((1 - \alpha) \Lambda_{11} + \alpha \lambda_1)^{-1} \Lambda_{12}$. In this example $\lambda_1$, $\lambda_2$ are feasible for all $\alpha$, and solving the fixed point equations, finally we have the stable fixed point as
+\begin{equation*}
+\lambda_1 = \rho_{\alpha} \Lambda_{11}, \quad \lambda_2 = \rho_{\alpha} \Lambda_{22}, \quad 
+\rho_{\alpha} = \frac{1}{2 \alpha} \left[ (2\alpha - 1) + \sqrt{1 - \frac{4\alpha (1 - \alpha) \Lambda_{12}^2}{\Lambda_{11} \Lambda_{22}}} \right].
+\end{equation*}
+The other solution for the quadratic formula is eliminated since it violates the assumptions that $\lambda_1 > 0$ (when $0 < \alpha < 1$) and $|\mathcal{L}_{\alpha}| < +\infty$ (when $\alpha < 0$ or $\alpha > 1$, since it requires $|\alpha \text{diag}(\bm{\lambda}) + (1 - \alpha)\bm{\Lambda}| > 0$). Thus the stable fixed point in this case is unique.
+
+One can show that $\lim_{\alpha \rightarrow 1} \lambda_1 = \Lambda_{11}$, $\lim_{\alpha \rightarrow 0} \lambda_1 = \Lambda_{11} - \Lambda_{12} \Lambda_{22}^{-1} \Lambda_{21}$ and $\lim_{\alpha \rightarrow \pm \infty} \lambda_1 = \Lambda_{11} \pm |\Lambda_{12}| \sqrt{\Lambda_{11} \Lambda_{22}^{-1}}$ (similar results for $\lambda_2$). Also $\rho_{\alpha}$ is continuous and non-decreasing in $\alpha$. This means one can interpolate between mass-covering and zero-forcing behaviour by increasing $\alpha$ values. Moreover, notice that the limiting case $\alpha \rightarrow +\infty$ still returns uncertain estimates, although it is even more over-confident than VI. This is different from maximum a posteriori (MAP) which captures the mode but only returns a point estimate.

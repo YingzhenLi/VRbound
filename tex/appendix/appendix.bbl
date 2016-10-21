@@ -1,0 +1,47 @@
+\begin{thebibliography}{1}
+
+\bibitem{li:sep}
+Y.~Li, J.~M. Hern{\'a}ndez-Lobato, and R.~E. Turner, ``Stochastic expectation
+  propagation,'' in {\em Advances in Neural Information Processing Systems
+  (NIPS)}, 2015.
+
+\bibitem{hernandez-lobato:bb-alpha}
+J.~M. Hern{\'a}ndez-Lobato, Y.~Li, M.~Rowland, D.~Hern{\'a}ndez-Lobato, T.~Bui,
+  and R.~E. Turner, ``Black-box $\alpha$-divergence minimization,'' in {\em
+  Proceedings of The 33rd International Conference on Machine Learning (ICML)},
+  2016.
+
+\bibitem{amari:divergence}
+S.-i. Amari, {\em Differential-Geometrical Methods in Statistic}.
+\newblock New York: Springer, 1985.
+
+\bibitem{tsallis:divergence}
+C.~Tsallis, ``Possible generalization of {Boltzmann-Gibbs} statistics,'' {\em
+  Journal of statistical physics}, vol.~52, no.~1-2, pp.~479--487, 1988.
+
+\bibitem{burda:iwae}
+Y.~Burda, R.~Grosse, and R.~Salakhutdinov, ``Importance weighted
+  autoencoders,'' in {\em International Conference on Learning Representations
+  (ICLR)}, 2016.
+
+\bibitem{van_erven:renyi}
+T.~Van~Erven and P.~Harremo{\"e}s, ``R{\'e}nyi divergence and
+  {Kullback-Leibler} divergence,'' {\em Information Theory, IEEE Transactions
+  on}, vol.~60, no.~7, pp.~3797--3820, 2014.
+
+\bibitem{bui:dgp}
+T.~D. Bui, D.~Hern{\'a}ndez-Lobato, Y.~Li, J.~M. Hern{\'a}ndez-Lobato, and
+  R.~E. Turner, ``Deep gaussian processes for regression using approximate
+  expectation propagation,'' in {\em Proceedings of The 33rd International
+  Conference on Machine Learning (ICML)}, 2016.
+
+\bibitem{depeweg:bnn_rl}
+S.~Depeweg, J.~M. Hern{\'a}ndez-Lobato, F.~Doshi-Velez, and S.~Udluft,
+  ``Learning and policy search in stochastic dynamical systems with bayesian
+  neural networks,'' {\em arXiv preprint arXiv:1605.07127}, 2016.
+
+\bibitem{kingma:adam}
+D.~P. Kingma and J.~Ba, ``Adam: A method for stochastic optimization,'' in {\em
+  International Conference on Learning Representations (ICLR)}, 2015.
+
+\end{thebibliography}

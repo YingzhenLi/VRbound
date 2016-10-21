@@ -1,0 +1,28 @@
+
+%\begin{table}[t]
+\centering
+%\caption
+\captionof{table}{ Average Test log-likelihood. Results for VAE on MNIST and OMNIGLOT are collected from \cite{burda:iwae}.}
+\label{tab:vae_ll}
+\begin{tabular}{lccccc}
+\toprule
+\bf{Dataset}&$L$&$K$&\bf{ VAE }&\bf{ IWAE }&\bf{ VR-max }\\
+\hline
+Frey Face&1&5&1322.96&\bf{1380.30}&1377.40\\
+($\pm$ std. err.)& & &$\pm$10.03&\bf{$\pm$4.60}&$\pm$4.59 \\
+\hline
+Caltech 101& 1& 5&-119.69&\bf{-117.89}&-118.01\\
+Silhouettes&  &50&-119.61&-117.21&\bf{-117.10}\\
+\hline
+MNIST& 1&5 &-86.47&\bf{-85.41}&-85.42\\
+     &  &50&-86.35&\bf{-84.80}&-84.81\\
+     & 2&5 &-85.01&\bf{-83.92}&-84.04\\
+     &  &50&-84.78&\bf{-83.05}&-83.44\\
+\hline
+OMNIGLOT & 1&5 &-107.62&\bf{-106.30}&-106.33\\
+		 & 1&50&-107.80&\bf{-104.68}&-105.05\\
+		 & 2&5 &-106.31&\bf{-104.64}&-104.71\\
+		 & 2&50&-106.30&\bf{-103.25}&-103.72\\
+\bottomrule
+\end{tabular}
+%\end{table}

@@ -1,0 +1,12 @@
+\section{Other $\alpha$-divergence definitions}
+\label{sec:divergence_def}
+
+Here we include some existing $\alpha$-divergence definitions other than R{\'e}nyi's. 
+\begin{itemize}
+	\item Amari's $\alpha$-divergence \cite{amari:divergence}
+	$$\mathrm{D}_{\alpha}[p||q] = \frac{4}{1 - \alpha^2} \left( 1 - \int p(\bm{\theta})^{\frac{1+\alpha}{2}} q(\bm{\theta})^{\frac{1-\alpha}{2}} d\bm{\theta} \right).$$
+	\item Tsallis's $\alpha$-divergence \cite{tsallis:divergence}
+	$$\mathrm{D}_{\alpha}[p||q] = \frac{1}{\alpha - 1} \left( \int p(\bm{\theta})^{\alpha} q(\bm{\theta})^{1 - \alpha} d\bm{\theta} - 1\right).$$
+\end{itemize}
+
+Consider the problem of posterior approximation by minimising an $\alpha$-divergence. When the approximate posterior $q$ has an exponential family form, minimising $\mathrm{D}_{\alpha}[p||q]$, no matter which definition above is used (although may use different alpha), requires moment matching to the tilted distribution $\tilde{p}_{\alpha}(\bm{\theta}) \propto p(\bm{\theta})^{\alpha} q(\bm{\theta})^{1-\alpha}$. In the EP literature Amari's definition is often discussed. We focus on R{\'e}nyi's definition in the main text simply because $\mathrm{D}_{\alpha}[q(\bm{\theta})||p(\bm{\theta}|\mathcal{D})]$ using R{\'e}nyi's definition contains $\log p(\mathcal{D})$ that can be cancelled in the same way as VI is derived.

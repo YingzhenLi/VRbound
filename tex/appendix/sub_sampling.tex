@@ -1,0 +1,82 @@
+\section{Stochastic approximation for large-scale learning: derivations}
+\label{sec:sub_sampling}
+
+This section shows the connection between VR bound optimisation and the recently proposed algorithms: SEP \cite{li:sep} and BB-$\alpha$ \cite{hernandez-lobato:bb-alpha}, by taking $M = 1$ and $\alpha = 1 - \beta/N$.
+
+Recall that in the main text we define the ``average likelihood'' $\bar{f}_{\mathcal{D}}(\bm{\theta}) = [\prod_{n=1}^N p(\bm{x}_n|\bm{\theta})]^{\frac{1}{N}}$. Hence the joint distribution can be rewritten as $p(\bm{\theta}, \mathcal{D}) = p_0(\bm{\theta}) \bar{f}_{\mathcal{D}}(\bm{\theta})^N$. Also for a mini-batch of $M$ datapoints $\mathcal{S} = \{\bm{x}_{n_1}, ..., \bm{x}_{n_m} \} \sim \mathcal{D}$, we define the ``subset average likelihood'' $\bar{f}_{\mathcal{S}} = [\prod_{m=1}^M p(\bm{x}_{n_m}|\bm{\theta})]^{\frac{1}{M}}$. When $M = 1$ we also write $\bar{f}_{\mathcal{S}}(\bm{\theta}) = f_n(\bm{\theta})$ for $\mathcal{S} = \{ \bm{x}_n \}$.
+
+
+Now assume the posterior approximation is defined as $q(\bm{\theta}) = \frac{1}{Z_q} p_0(\bm{\theta}) t(\bm{\theta})^N$.
+Often $t(\bm{\theta})$ is chose to have an exponential family form $t(\bm{\theta}) \propto \exp \left[ \langle \bm{\lambda}, \bm{\Phi}(\bm{\theta}) \rangle \right]$ with $\bm{\Phi}(\bm{\theta})$ denoting the sufficient statistic. Then picking $\alpha = 1 - \beta/N$, $\beta \neq 0$, we have the exact VR bound as
+\begin{equation}
+\mathcal{L}_{\alpha}(q; \mathcal{D}) = \log Z_q + \frac{N}{\beta} \log \mathbb{E}_{q} \left[ \left( \frac{ \bar{f}_{\mathcal{D}}(\bm{\theta})} {t(\bm{\theta})} \right)^{\beta} \right]
+\label{eq:vr_bound_sa_exact}
+\end{equation}
+
+The first proposal considers deriving the exact fixed point conditions, then approximating them with mini-batch sub-sampling. In our example the exact fixed point condition for the variational parameters $\bm{\lambda}$ is
+\begin{equation}
+\nabla_{\bm{\lambda}} \mathcal{L}_{\alpha}(q; \mathcal{D}) = 0 \quad \Rightarrow \quad \mathbb{E}_{q}[\bm{\Phi}(\bm{\theta})] = \mathbb{E}_{\tilde{p}_{\alpha}}[\bm{\Phi}(\bm{\theta})],
+\end{equation} 
+with the tilted distribution defined as 
+$$\tilde{p}_{\alpha}(\bm{\theta}) \propto q(\bm{\theta})^{\alpha}p_0(\bm{\theta})^{1 - \alpha} \bar{f}_{\mathcal{D}}(\bm{\theta})^{N(1 - \alpha)} \propto p_0(\bm{\theta}) t(\bm{\theta})^{N - \beta} \bar{f}_{\mathcal{D}}(\bm{\theta})^{\beta}.$$ 
+Now given a mini-batch of datapoints $\mathcal{S}$, the moment matching update can be approximated by replacing $\bar{f}_{\mathcal{D}}(\bm{\theta})$ with $\bar{f}_{\mathcal{S}}(\bm{\theta}) = [\prod_{m=1}^M p(\bm{x}_{n_m}|\bm{\theta})]^{\frac{1}{M}}$. More precisely, each iteration we sample a subset of data $\mathcal{S} = \{\bm{x}_{n_1}, ..., \bm{x}_{n_M} \} \sim \mathcal{D}$, and compute the new update for $\bm{\lambda}$ by first computing $\tilde{p}_{\alpha, \mathcal{S}}(\bm{\theta}) \propto p_0(\bm{\theta}) t(\bm{\theta})^{N - \beta} \bar{f}_{\mathcal{S}}(\bm{\theta})^{\beta}$ then taking $\mathbb{E}_{q}[\bm{\Phi}(\bm{\theta})] \leftarrow \mathbb{E}_{\tilde{p}_{\alpha, \mathcal{S}}}[\bm{\Phi}(\bm{\theta})]$. This method returns SEP when $M = 1$, i.e.~in each iteration only one datapoint is sampled to update the approximate posterior.
+
+%
+The second proposal also applies this subset average likelihood approximation idea, but directly to the VR bound (\ref{eq:vr_bound_sa_exact}), with $\mathbb{E}_{\mathcal{S}}$ denotes the expectation over mini-batch sub-sampling:
+\begin{equation}
+\mathbb{E}_{\mathcal{S}} \left[ \tilde{\mathcal{L}}_{\alpha}(q; \mathcal{S}) \right] = \log Z_q + \frac{N}{\beta} \mathbb{E}_{\mathcal{S}} \left[ \log \mathbb{E}_{q} \left[ \left( \frac{ \bar{f}_{\mathcal{S}}(\bm{\theta})} {t(\bm{\theta})} \right)^{\beta} \right] \right].
+\label{eq:vr_bound_sa_approx}
+\end{equation}
+It recovers the energy function of BB-$\alpha$ when $M=1$. Note that the original paper \cite{hernandez-lobato:bb-alpha} uses an adapted form of Amari's $\alpha$-divergence, and the $\alpha$ value in the BB-$\alpha$ algorithm corresponds to $\beta$ in our exposition. Now the gradient of this approximated energy function becomes
+\begin{equation}
+\nabla_{\bm{\lambda}} \mathbb{E}_{\mathcal{S}} \left[ \tilde{\mathcal{L}}_{\alpha}(q; \mathcal{S}) \right] = N (\mathbb{E}_{q}[\bm{\Phi}(\bm{\theta})] - \mathbb{E}_{\mathcal{S}} \mathbb{E}_{\tilde{p}_{\alpha, \mathcal{S}}}[\bm{\Phi}(\bm{\theta})]).
+\end{equation}
+
+Both SEP and BB-$\alpha$ return SVI when $\alpha \rightarrow 1$ (or equivalently $\beta \rightarrow 0$). But for other $\alpha$ values it is important to note that these two proposals return different optimum at convergence. BB-$\alpha$ requires averages the moment of the tilted distribution $\mathbb{E}_{\mathcal{S}} \mathbb{E}_{\tilde{p}_{\alpha, \mathcal{S}}}[\bm{\Phi}(\bm{\theta})]$. However SEP first compute the inverse mapping from the moment $\mathbb{E}_{\tilde{p}_{\alpha, \mathcal{S}}}[\bm{\Phi}(\bm{\theta})]$ to obtain the natural parameters $\bm{\lambda}_{\mathcal{S}}$, then update the $q$ distribution by $\bm{\lambda} \leftarrow \mathbb{E}_{\mathcal{S}}[\bm{\lambda}_{\mathcal{S}}]$. In general the inverse mapping is non-linear so the fixed point conditions of SEP and BB-$\alpha$ are different.
+
+SEP is arguably more well justified since it returns the exact posterior if the approximation family $\mathcal{Q}$ is large enough to include the correct solution, just like VI and VR computed on the whole dataset. BB-$\alpha$ might still be biased even in this scenario. But BB-$\alpha$ is much simpler to implement since the energy function can be optimised with stochastic gradient descent. Indeed the authors of \cite{hernandez-lobato:bb-alpha} considered the same black-box approach as to VI, by computing a stochastic estimate of the energy function then using automatic differentiation tools to obtain the gradients. 
+
+We also provide a bound of the energy approximation (\ref{eq:vr_bound_sa_approx}) by the following theorem.
+%
+\begin{theorem}
+\label{thm:stochastic_approx}
+If the approximate distribution $q(\bm{\theta})$ is Gaussian $\mathcal{N}(\bm{\mu}, \bm{\Sigma})$, and the likelihood functions has an exponential family form $p(\bm{x}|\bm{\theta}) = \exp [\langle \bm{\theta}, \bm{\Psi}(\bm{x}) \rangle - A(\bm{\theta})]$, then for $\alpha \leq 1$ and $r > 1$ the stochastic approximation is bounded by
+\begin{equation*}
+\mathbb{E}_{\mathcal{S}} [\tilde{\mathcal{L}}_{\alpha}(q; \mathcal{S})] \leq \mathcal{L}_{1 - (1 - \alpha)r}(q; \mathcal{D}) + \frac{N^2(1-\alpha) r}{2(r - 1)}  \mathrm{tr}(\bm{\Sigma} \mathrm{Cov}_{\mathcal{S} \sim \mathcal{D}}( \bar{\bm{\Psi}}_{\mathcal{S}})).
+\end{equation*}
+\end{theorem}
+
+\begin{proof}
+We substitute the exponential family likelihood term into the stochastic approximation of the VR bound with $\alpha < 1$, and use H{\"o}lder's inequality for any $1/r + 1/s = 1$, $r > 1$ (define $\tilde{\alpha} = 1 - (1 - \alpha) r$):
+\begin{equation*}
+\begin{aligned}
+\mathbb{E}_{\mathcal{S}} [\tilde{\mathcal{L}}_{\alpha}(q; \mathcal{S})] 
+    &= \frac{1}{1 - \alpha} \log \mathbb{E}_{q} [ \left( \frac{p_0(\bm{\theta}) \bar{f}_{\mathcal{D}}(\bm{\theta})^N} {q(\bm{\theta})} \frac{\bar{f}_{\mathcal{S}}(\bm{\theta})^N}{\bar{f}_{\mathcal{D}}(\bm{\theta})^N}  \right)^{1 - \alpha} ] \\
+	&\leq \mathcal{L}_{\tilde{\alpha}}(q; \mathcal{D}) + \frac{1}{(1 - \alpha)s} \mathbb{E}_{\mathcal{S}} \left\lbrace \log \mathbb{E}_{q} [ \exp [N(1 - \alpha) s \langle \bar{\bm{\Psi}}_{\mathcal{S}} - \bar{\bm{\Psi}}_{\mathcal{D}}, \bm{\theta} \rangle ] ] \right\rbrace \\
+	&= \mathcal{L}_{\tilde{\alpha}}(q; \mathcal{D}) + \frac{1}{(1 - \alpha)s} \mathbb{E}_{\mathcal{S}} [K_{\bm{\theta}}(N(1 - \alpha) s (\bar{\bm{\Psi}}_{\mathcal{S}} - \bar{\bm{\Psi}}_{\mathcal{D}})) ],
+\end{aligned}
+\end{equation*}
+where $\bar{\bm{\Psi}}_{\mathcal{S}}$ and $\bar{\bm{\Psi}}_{\mathcal{D}}$ denote the mean of the sufficient statistic $\bm{\Psi}(\bm{x})$ on the mini-batch $\mathcal{S}$ and the whole dataset $\mathcal{D}$, respectively. For Gaussian distribution $q(\bm{\theta}) = \mathcal{N}(\bm{\mu}, \bm{\Sigma})$ the cumulant generating function $K_{\bm{\theta}}(\bm{t})$ has a closed form
+\begin{equation*}
+K_{\bm{\theta}}(\bm{t}) = \bm{\mu}^T\bm{t} + \frac{1}{2} \bm{t}^T \bm{\Sigma} \bm{t}.
+\end{equation*}
+Define $\bm{t}_{\mathcal{S}} = N(1 - \alpha) s \Delta_{\mathcal{S}}$ with $\Delta_{\mathcal{S}} = \bar{\bm{\Psi}}_{\mathcal{S}} - \bar{\bm{\Psi}}_{\mathcal{D}}$, then $\mathbb{E}_{\mathcal{S}}[\bm{t}_{\mathcal{S}}] = \bm{0}$ and the upper-bound becomes
+\begin{equation*}
+\begin{aligned}
+\mathbb{E}_{\mathcal{S}} [\tilde{\mathcal{L}}_{\alpha}(q; \mathcal{S})] 
+	&\leq \mathcal{L}_{\tilde{\alpha}}(q; \mathcal{D}) + \frac{1}{(1 - \alpha)s} \mathbb{E}_{\mathcal{S}} [K_{\bm{\theta}}(\bm{t}_{\mathcal{S}}) ]\\
+	&= \mathcal{L}_{\tilde{\alpha}}(q; \mathcal{D}) + \frac{1}{(1 - \alpha)s} \mathbb{E}_{\mathcal{S}} [\bm{\mu}^T\bm{t}_{\mathcal{S}} + \frac{1}{2} \bm{t}_{\mathcal{S}}^T \bm{\Sigma} \bm{t}_{\mathcal{S}} ] \\
+	&= \mathcal{L}_{\tilde{\alpha}}(q; \mathcal{D}) + \frac{N^2(1-\alpha) s}{2} \mathbb{E}_{\mathcal{S}} [\Delta_{\mathcal{S}}^T \bm{\Sigma} \Delta_{\mathcal{S}} ] \\
+	&= \mathcal{L}_{\tilde{\alpha}}(q; \mathcal{D}) + \frac{N^2(1-\alpha) s}{2} \mathrm{tr}(\bm{\Sigma} \mathrm{Cov}_{\mathcal{S} \sim \mathcal{D}}( \bar{\bm{\Psi}}_{\mathcal{S}})).
+\end{aligned}
+\end{equation*}
+Applying the condition of H{\"o}lder's inequality $1/r + 1/s = 1$ proves the result.
+\end{proof}
+
+The following corollary is a direct result of Theorem \ref{thm:stochastic_approx} applied to BB-$\alpha$. Note here we follow the convention of the original paper \cite{hernandez-lobato:bb-alpha} to use $M = 1$ and overload the notation $\alpha = \beta$ and $\mathcal{L}_{BB-\alpha}(q; \mathcal{D}) = \mathbb{E}_{\{  \bm{x}_n\}} \left[ \tilde{\mathcal{L}}_{1 - \alpha/N}(q; \{ \bm{x}_n \}) \right]$.
+\begin{corollary}
+Assume the approximate posterior and the likelihood functions satisfy the assumptions in Theorem 3, then for $\alpha > 0$ and $r > 1$, the black-box alpha energy function is upper-bounded by
+\begin{equation*}
+\mathcal{L}_{BB-\alpha}(q; \mathcal{D}) \leq \mathcal{L}_{1 - \frac{\alpha r}{N}}(q; \mathcal{D}) + \frac{N \alpha r}{2(r - 1)}  \mathrm{tr}(\bm{\Sigma} \mathrm{Cov}_{\mathcal{D}}(\bm{\Psi})).
+\end{equation*}
+\end{corollary} 

@@ -1,0 +1,26 @@
+\begin{table}[t]
+  \centering
+  \caption{Special cases in the R{\'e}nyi divergence family.}
+  \renewcommand{\arraystretch}{1.2}
+  \label{tab:renyi_example}
+  \begin{tabular}{ccl}
+  	\toprule
+    $\alpha$ & Definition & Notes\\
+    \hline
+    $\alpha \rightarrow 1$ & $\int p(\bm{\theta}) \log \frac{p(\bm{\theta})}{q(\bm{\theta})} d \bm{\theta}$ & 
+    \begin{tabular}{@{}l@{}} \emph{Kullback-Leibler (KL) divergence}, \\ used in VI ($\mathrm{KL}[q||p]$) and EP ($\mathrm{KL}[p||q]$) \end{tabular} \\
+    %
+    $\alpha = 0.5$ & $-2 \log (1 - \mathrm{Hel}^2[p||q])$ & function of the square \emph{Hellinger distance}\\
+    %
+    $\alpha \rightarrow 0$ & $-\log \int_{p(\bm{\theta}) > 0} q(\bm{\theta}) d\bm{\theta}$ & 
+    \begin{tabular}{@{}l@{}} zero when $\mathrm{supp}(q) \subseteq \mathrm{supp}(p)$ \\ (not a divergence) \end{tabular} \\
+    %
+    $\alpha = 2$ & $-\log (1 - \chi^2[p||q])$ & 
+    \begin{tabular}{@{}l@{}} proportional to the $\chi^2$-divergence \end{tabular} \\
+    %
+    $\alpha \rightarrow +\infty$ & $\log \max_{\bm{\theta} \in \Theta} \frac{p(\bm{\theta})}{q(\bm{\theta})}$ &
+    \begin{tabular}{@{}l@{}} \emph{worst-case regret} in \\ \emph{minimum description length principle} \cite{grunwald:mdl}\end{tabular} \\
+    \bottomrule
+  \end{tabular}
+  %\vspace{-0.1in}
+\end{table}

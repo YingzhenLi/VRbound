@@ -1,0 +1,137 @@
+\begin{thebibliography}{10}
+
+\bibitem{jordan:vi}
+M.~I. Jordan, Z.~Ghahramani, T.~S. Jaakkola, and L.~K. Saul, ``An introduction
+  to variational methods for graphical models,'' {\em Machine learning},
+  vol.~37, no.~2, pp.~183--233, 1999.
+
+\bibitem{beal:thesis}
+M.~J. Beal, {\em Variational algorithms for approximate Bayesian inference}.
+\newblock PhD thesis, University College London, 2003.
+
+\bibitem{minka:ep}
+T.~Minka, ``{Expectation propagation for approximate Bayesian inference},'' in
+  {\em Conference on Uncertainty in Artificial Intelligence (UAI)}, 2001.
+
+\bibitem{opper:ec}
+M.~Opper and O.~Winther, ``Expectation consistent approximate inference,'' {\em
+  The Journal of Machine Learning Research}, vol.~6, pp.~2177--2204, 2005.
+
+\bibitem{minka:divergence}
+T.~Minka, ``Divergence measures and message passing,'' tech. rep., Microsoft
+  Research, 2005.
+
+\bibitem{hoffman:svi}
+M.~D. Hoffman, D.~M. Blei, C.~Wang, and J.~W. Paisley, ``Stochastic variational
+  inference,'' {\em Journal of Machine Learning Research}, vol.~14, no.~1,
+  pp.~1303--1347, 2013.
+
+\bibitem{li:sep}
+Y.~Li, J.~M. Hern{\'a}ndez-Lobato, and R.~E. Turner, ``Stochastic expectation
+  propagation,'' in {\em Advances in Neural Information Processing Systems
+  (NIPS)}, 2015.
+
+\bibitem{barthelme:aep}
+G.~Dehaene and S.~Barthelm\'e, ``Expectation propagation in the large-data
+  limit,'' {\em arXiv:1503.08060}, 2015.
+
+\bibitem{broderick:stream}
+T.~Broderick, N.~Boyd, A.~Wibisono, A.~C. Wilson, and M.~I. Jordan, ``Streaming
+  variational {Bayes},'' in {\em Advances in Neural Information Processing
+  Systems (NIPS)}, 2013.
+
+\bibitem{gelman:dep}
+A.~Gelman, A.~Vehtari, P.~Jylänki, C.~Robert, N.~Chopin, and J.~P. Cunningham,
+  ``Expectation propagation as a way of life,'' {\em arXiv:1412.4869}, 2014.
+
+\bibitem{xu:sms}
+M.~Xu, B.~Lakshminarayanan, Y.~W. Teh, J.~Zhu, and B.~Zhang, ``Distributed
+  {Bayesian} posterior sampling via moment sharing,'' in {\em Advances in
+  Neural Information Processing Systems (NIPS)}, 2014.
+
+\bibitem{paisley:bbvi}
+J.~Paisley, D.~Blei, and M.~Jordan, ``Variational {Bayesian} inference with
+  stochastic search,'' in {\em Proceedings of The 29th International Conference
+  on Machine Learning (ICML)}, 2012.
+
+\bibitem{salimans:reparam}
+T.~Salimans and D.~A. Knowles, ``Fixed-form variational posterior approximation
+  through stochastic linear regression,'' {\em Bayesian Analysis}, vol.~8,
+  no.~4, pp.~837--882, 2013.
+
+\bibitem{ranganath:bbvi}
+R.~Ranganath, S.~Gerrish, and D.~M. Blei, ``Black box variational inference,''
+  in {\em Proceedings of the 17th International Conference on Artificial
+  Intelligence and Statistics (AISTATS)}, 2014.
+
+\bibitem{kucukelbir:vi_stan}
+A.~Kucukelbir, R.~Ranganath, A.~Gelman, and D.~M. Blei, ``Automatic variational
+  inference in {Stan},'' in {\em Advances in Neural Information Processing
+  Systems (NIPS)}, 2015.
+
+\bibitem{hernandez-lobato:bb-alpha}
+J.~M. Hern{\'a}ndez-Lobato, Y.~Li, M.~Rowland, D.~Hern{\'a}ndez-Lobato, T.~Bui,
+  and R.~E. Turner, ``Black-box $\alpha$-divergence minimization,'' in {\em
+  Proceedings of The 33rd International Conference on Machine Learning (ICML)},
+  2016.
+
+\bibitem{burda:iwae}
+Y.~Burda, R.~Grosse, and R.~Salakhutdinov, ``Importance weighted
+  autoencoders,'' in {\em International Conference on Learning Representations
+  (ICLR)}, 2016.
+
+\bibitem{kingma:vae}
+D.~P. Kingma and M.~Welling, ``Auto-encoding variational {Bayes},'' in {\em
+  International Conference on Learning Representations (ICLR)}, 2014.
+
+\bibitem{rezende:vae}
+D.~J. Rezende, S.~Mohamed, and D.~Wierstra, ``Stochastic backpropagation and
+  approximate inference in deep generative models,'' in {\em Proceedings of The
+  30th International Conference on Machine Learning (ICML)}, 2014.
+
+\bibitem{renyi:divergence}
+A.~R{\'e}nyi, ``On measures of entropy and information,'' {\em Fourth Berkeley
+  symposium on mathematical statistics and probability}, vol.~1, 1961.
+
+\bibitem{amari:divergence}
+S.-i. Amari, {\em Differential-Geometrical Methods in Statistic}.
+\newblock New York: Springer, 1985.
+
+\bibitem{tsallis:divergence}
+C.~Tsallis, ``Possible generalization of {Boltzmann-Gibbs} statistics,'' {\em
+  Journal of statistical physics}, vol.~52, no.~1-2, pp.~479--487, 1988.
+
+\bibitem{van_erven:renyi}
+T.~Van~Erven and P.~Harremo{\"e}s, ``R{\'e}nyi divergence and
+  {Kullback-Leibler} divergence,'' {\em Information Theory, IEEE Transactions
+  on}, vol.~60, no.~7, pp.~3797--3820, 2014.
+
+\bibitem{grunwald:mdl}
+P.~Gr{\"u}nwald, {\em {Minimum Description Length Principle}}.
+\newblock MIT press, Cambridge, MA, 2007.
+
+\bibitem{turner:two_problems}
+R.~E. Turner and M.~Sahani, ``Two problems with variational expectation
+  maximisation for time-series models,'' in {\em Bayesian Time series models}
+  (D.~Barber, T.~Cemgil, and S.~Chiappa, eds.), ch.~5, pp.~109--130, Cambridge
+  University Press, 2011.
+
+\bibitem{minka:powerep}
+T.~Minka, ``{Power EP},'' Tech. Rep. MSR-TR-2004-149, Microsoft Research, 2004.
+
+\bibitem{bui:dgp}
+T.~D. Bui, D.~Hern{\'a}ndez-Lobato, Y.~Li, J.~M. Hern{\'a}ndez-Lobato, and
+  R.~E. Turner, ``Deep gaussian processes for regression using approximate
+  expectation propagation,'' in {\em Proceedings of The 33rd International
+  Conference on Machine Learning (ICML)}, 2016.
+
+\bibitem{depeweg:bnn_rl}
+S.~Depeweg, J.~M. Hern{\'a}ndez-Lobato, F.~Doshi-Velez, and S.~Udluft,
+  ``Learning and policy search in stochastic dynamical systems with bayesian
+  neural networks,'' {\em arXiv preprint arXiv:1605.07127}, 2016.
+
+\bibitem{kingma:adam}
+D.~P. Kingma and J.~Ba, ``Adam: A method for stochastic optimization,'' in {\em
+  International Conference on Learning Representations (ICLR)}, 2015.
+
+\end{thebibliography}

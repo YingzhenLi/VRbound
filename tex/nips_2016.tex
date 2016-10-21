@@ -1,0 +1,112 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.:
+\PassOptionsToPackage{numbers, sort}{natbib}
+% before loading nips_2016
+%
+% to avoid loading the natbib package, add option nonatbib:
+% \usepackage[nonatbib]{nips_2016}
+
+%\usepackage{nips_2016}
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+ \usepackage[final]{nips_2016}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+
+% use Times
+\usepackage{times}
+% For figures
+\usepackage{graphicx} % more modern
+%\usepackage{epsfig} % less modern
+\usepackage{subfigure} 
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb, amsthm, bm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{prop}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+% For algorithms
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\newcommand{\ica}{\hspace{0.25cm}}
+\renewcommand{\arraystretch}{0.94}
+\usepackage{enumitem}
+
+\usepackage{capt-of}
+
+\title{R{\'e}nyi Divergence Variational Inference}
+
+% The \author macro works with any number of authors. There are two
+% commands used to separate the names and addresses of multiple
+% authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to
+% break the lines. Using \AND forces a line break at that point. So,
+% if LaTeX puts 3 of 4 authors names on the first line, and the last
+% on the second line, try using \AND instead of \And before the third
+% author name.
+
+\author{
+  Yingzhen Li \\
+  University of Cambridge\\
+  Cambridge, CB2 1PZ, UK \\
+  \texttt{yl494@cam.ac.uk} \\
+  \And
+  Richard E.~Turner \\
+  University of Cambridge\\
+  Cambridge, CB2 1PZ, UK \\
+  \texttt{ret26@cam.ac.uk} \\
+}
+
+\begin{document}
+% \nipsfinalcopy is no longer used
+
+\maketitle
+
+\begin{abstract}
+This paper introduces the \emph{variational R{\'e}nyi bound (VR)} that extends traditional variational inference to R{\'e}nyi's $\alpha$-divergences. This new family of variational methods unifies a number of existing approaches, and enables a smooth interpolation from the evidence lower-bound to the log (marginal) likelihood that is controlled by the value of $\alpha$ that parametrises the divergence. The reparameterization trick, Monte Carlo approximation and stochastic optimisation methods are deployed to obtain a tractable and unified framework for optimisation. We further consider negative $\alpha$ values and propose a novel variational inference method as a new special case in the proposed framework. Experiments on Bayesian neural networks and variational auto-encoders demonstrate the wide applicability of the VR bound.
+\end{abstract}
+
+% intro
+\input{intro}
+
+% background
+\input{background}
+
+% vr bound
+\input{section3}
+
+% stochastic approximation
+\input{section4}
+
+% Experiments
+\input{experiments}
+
+% conclusion
+\input{conclusion}
+
+\subsubsection*{Acknowledgements}
+We thank the Cambridge MLG members and the reviewers for comments. YL thanks the Schlumberger Foundation FFTF fellowship. RET thanks EPSRC grants \# EP/M026957/1 and EP/L000776/1.
+
+% references
+\subsubsection*{References}
+\renewcommand{\section}[2]{}
+\setlength{\bibsep}{0pt plus 0.3ex}
+\bibliographystyle{ieeetr}
+\small
+\bibliography{alpha_vi}
+
+\end{document}
